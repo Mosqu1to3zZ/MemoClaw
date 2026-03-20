@@ -9,12 +9,21 @@
     "dev": "node --watch src/index.js",
     "test": "node src/test.js"
   },
-  "keywords": ["ai", "agent", "memory", "compression", "retrieval"],
+  "keywords": [
+    "ai",
+    "agent",
+    "memory",
+    "compression",
+    "retrieval"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "sqlite3": "^5.1.6",
+    "chalk": "^4.1.2",
     "commander": "^11.1.0",
-    "chalk": "^4.1.2"
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "luxon": "^3.7.2",
+    "sqlite3": "^5.1.6"
   }
 }

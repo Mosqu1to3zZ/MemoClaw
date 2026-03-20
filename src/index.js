@@ -5,8 +5,8 @@
 
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const { MemoryCompression } = require('./core/compression');
-const { HybridRetrieval } = require('./core/retrieval');
+const MemoryCompression = require('./core/compression');
+const HybridRetrieval = require('./core/retrieval');
 const chalk = require('chalk');
 
 class MemClaw {
