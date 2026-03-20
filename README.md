@@ -27,7 +27,7 @@
       <img src="https://img.shields.io/github/issues/Mosqu1to3zZ/memclaw-memory-optimizer" alt="GitHub Issues" />
     </a>
     <a href="https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/blob/master/LICENSE">
-      <img src="https://img.shields.io/github/license/Mosqu1to3zZ/memclaw-memory-optimizer" alt="License" />
+      <img src="https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square" alt="Apache-2.0" />
     </a>
   </p>
 
@@ -291,7 +291,7 @@ npm run build
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
