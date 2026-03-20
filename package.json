@@ -1,0 +1,20 @@
+{
+  "name": "memclaw",
+  "version": "1.0.0",
+  "description": "AI Memory Optimizer - 让 Agent 记得更准、更聪明",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node src/test.js"
+  },
+  "keywords": ["ai", "agent", "memory", "compression", "retrieval"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2"
+  }
+}

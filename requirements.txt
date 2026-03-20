@@ -1,0 +1,18 @@
+# MemClaw 依赖
+# pip install -r requirements.txt
+
+# 核心依赖
+numpy>=1.21.0
+
+# 可选：向量嵌入
+# openai>=1.0.0
+# sentence-transformers>=2.2.0
+
+# 可选：存储
+# redis>=4.5.0
+
+# 开发依赖
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+mypy>=1.0.0
