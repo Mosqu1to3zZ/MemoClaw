@@ -12,6 +12,20 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const memclaw = new MemClaw(path.join(__dirname, '../memories.db'));
 
+// 等待数据库连接完成
+function waitForDatabaseReady() {
+  return new Promise((resolve) => {
+    const checkReady = () => {
+      if (memclaw.ready) {
+        resolve();
+      } else {
+        setTimeout(checkReady, 100);
+      }
+    };
+    checkReady();
+  });
+}
+
 // 中间件
 app.use(cors());
 app.use(express.json());
@@ -106,6 +120,25 @@ app.get('/api/memories', asyncHandler(async (req, res) => {
       total: filtered.length,
       totalPages: Math.ceil(filtered.length / limit)
     }
+  });
+}));
+
+/**
+ * 获取价值评分
+ * GET /api/memories/value-scores
+ */
+app.get('/api/memories/value-scores', asyncHandler(async (req, res) => {
+  const scoredMemories = await new Promise((resolve, reject) => {
+    memclaw.getValueScores((err, memories) => {
+      if (err) reject(err);
+      else resolve(memories);
+    });
+  });
+
+  res.json({
+    memories: scoredMemories,
+    total: scoredMemories.length,
+    recommendArchive: scoredMemories.filter(m => m.scores.recommendArchive).length
   });
 }));
 
@@ -278,6 +311,48 @@ app.delete('/api/memories/:id', asyncHandler(async (req, res) => {
   res.json({ message: '记忆已删除' });
 }));
 
+/**
+ * 批量归档记忆
+ * POST /api/memories/batch-archive
+ */
+app.post('/api/memories/batch-archive', asyncHandler(async (req, res) => {
+  const { ids } = req.body;
+
+  if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ error: '记忆 ID 列表不能为空' });
+  }
+
+  const result = await new Promise((resolve, reject) => {
+    memclaw.batchArchiveMemories(ids, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+
+  res.json(result);
+}));
+
+/**
+ * 批量解档记忆
+ * POST /api/memories/batch-unarchive
+ */
+app.post('/api/memories/batch-unarchive', asyncHandler(async (req, res) => {
+  const { ids } = req.body;
+
+  if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ error: '记忆 ID 列表不能为空' });
+  }
+
+  const result = await new Promise((resolve, reject) => {
+    memclaw.batchUnarchiveMemories(ids, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+
+  res.json(result);
+}));
+
 // 健康检查
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -288,13 +363,22 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../web/dist/index.html'));
 });
 
-// 启动服务器
-app.listen(PORT, () => {
-  console.log(`\n🚀 MemClaw API Server 启动成功!`);
-  console.log(`📍 API 地址: http://localhost:${PORT}/api`);
-  console.log(`🌐 Web UI: http://localhost:${PORT}`);
-  console.log(`\n按 Ctrl+C 停止服务器\n`);
-});
+// 启动服务器（等待数据库准备好）
+(async () => {
+  try {
+    await waitForDatabaseReady();
+    
+    app.listen(PORT, () => {
+      console.log(`\n🚀 MemClaw API Server 启动成功!`);
+      console.log(`📍 API 地址: http://localhost:${PORT}/api`);
+      console.log(`🌐 Web UI: http://localhost:${PORT}`);
+      console.log(`\n按 Ctrl+C 停止服务器\n`);
+    });
+  } catch (error) {
+    console.error('启动服务器失败:', error);
+    process.exit(1);
+  }
+})();
 
 // 优雅关闭
 process.on('SIGINT', () => {

@@ -68,6 +68,18 @@ export interface ValueScore {
   frequency: number;
   recency: number;
   quality: number;
-  overall: number;
-  recommendation: 'archive' | 'preserve';
+  weight: number;
+  composite: number;
+  recommendArchive: boolean;
+}
+
+export interface ValueScoresResponse {
+  memories: Array<Memory & { scores: ValueScore }>;
+  total: number;
+  recommendArchive: number;
+}
+
+export interface BatchOperationResult {
+  archived?: number;
+  unarchived?: number;
 }

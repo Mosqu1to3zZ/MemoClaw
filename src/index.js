@@ -12,11 +12,15 @@ const chalk = require('chalk');
 class MemClaw {
   constructor(dbPath = './memories.db') {
     this.dbPath = path.resolve(dbPath);
+    this.db = null;
+    this.ready = false;
+    
     this.db = new sqlite3.Database(this.dbPath, (err) => {
       if (err) {
         console.error('数据库连接失败:', err);
       } else {
         console.log(chalk.green('✓ 数据库连接成功'));
+        this.ready = true;
         this.initDatabase();
       }
     });
@@ -73,10 +77,17 @@ class MemClaw {
    * @param {Function} callback
    */
   addMemory(content, options = {}, callback) {
-    const { type = 'log', tags = [] } = options;
+    // 等待数据库准备好
+    if (!this.ready || !this.db) {
+      setTimeout(() => this.addMemory(content, options, callback), 100);
+      return;
+    }
     
-    this.db.serialize(() => {
-      this.db.run(
+    const { type = 'log', tags = [] } = options;
+    const db = this.db;
+    
+    db.serialize(() => {
+      db.run(
         'INSERT INTO memories (content, type, tags, original_length) VALUES (?, ?, ?, ?)',
         [content, type, JSON.stringify(tags), content.length],
         function(err) {
@@ -88,7 +99,7 @@ class MemClaw {
           const memoryId = this.lastID;
           
           // 初始化统计
-          this.db.run(
+          db.run(
             'INSERT INTO memory_stats (memory_id, access_count, last_access) VALUES (?, 1, strftime("%s", "now"))',
             [memoryId],
             function(err2) {
@@ -278,6 +289,145 @@ class MemClaw {
           });
         });
       });
+    });
+  }
+
+  /**
+   * 计算记忆价值评分
+   * @param {Object} memory - 记忆对象
+   * @param {Object} stats - 统计信息
+   * @returns {Object} 价值评分结果
+   */
+  calculateValueScore(memory, stats) {
+    const { access_count = 0, last_access } = stats || {};
+    const { type, tags } = memory;
+
+    // 1. 频率评分（30%）：基于访问次数
+    const maxAccess = 10;
+    const frequencyScore = Math.min(access_count / maxAccess, 1) * 100;
+
+    // 2. 时效性评分（30%）：基于最后访问时间
+    const now = Math.floor(Date.now() / 1000);
+    const daysSinceLastAccess = Math.max(0, Math.floor((now - last_access) / 86400));
+    const maxDays = 30;
+    const recencyScore = Math.max(0, (1 - daysSinceLastAccess / maxDays)) * 100;
+
+    // 3. 质量评分（20%）：是否有标签
+    const hasTags = tags && Array.isArray(tags) && tags.length > 0;
+    const qualityScore = hasTags ? 80 : 50;
+
+    // 4. 权重评分（20%）：记忆类型权重
+    const highPriorityTypes = ['preference', 'decision'];
+    const typeWeight = highPriorityTypes.includes(type) ? 1.2 : 1.0;
+    const weightScore = typeWeight * 83.33; // 归一化到 100
+
+    // 综合评分
+    const compositeScore = (
+      frequencyScore * 0.3 +
+      recencyScore * 0.3 +
+      qualityScore * 0.2 +
+      weightScore * 0.2
+    );
+
+    return {
+      frequency: Math.round(frequencyScore),
+      recency: Math.round(recencyScore),
+      quality: Math.round(qualityScore),
+      weight: Math.round(weightScore),
+      composite: Math.round(compositeScore),
+      recommendArchive: compositeScore < 40
+    };
+  }
+
+  /**
+   * 获取所有记忆的价值评分
+   * @param {Function} callback
+   */
+  getValueScores(callback) {
+    this.db.all('SELECT * FROM memories ORDER BY created_at DESC', [], async (err, memories) => {
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      try {
+        // 获取所有记忆的统计信息
+        const statsMap = new Map();
+        await new Promise((resolve, reject) => {
+          this.db.all('SELECT * FROM memory_stats', [], (err, stats) => {
+            if (err) reject(err);
+            else {
+              stats.forEach(stat => statsMap.set(stat.memory_id, stat));
+              resolve();
+            }
+          });
+        });
+
+        // 计算每条记忆的价值评分
+        const scoredMemories = memories.map(memory => {
+          const stats = statsMap.get(memory.id) || { access_count: 0, last_access: memory.last_access };
+          const scores = this.calculateValueScore(memory, stats);
+
+          return {
+            ...memory,
+            tags: memory.tags ? JSON.parse(memory.tags) : [],
+            scores
+          };
+        });
+
+        // 按 综合评分 排序
+        scoredMemories.sort((a, b) => b.scores.composite - a.scores.composite);
+
+        callback(null, scoredMemories);
+      } catch (error) {
+        callback(error);
+      }
+    });
+  }
+
+  /**
+   * 批量归档记忆
+   * @param {Array} ids - 记忆 ID 数组
+   * @param {Function} callback
+   */
+  batchArchiveMemories(ids, callback) {
+    if (!ids || ids.length === 0) {
+      callback(null, { archived: 0 });
+      return;
+    }
+
+    const placeholders = ids.map(() => '?').join(',');
+    const sql = `UPDATE memories SET compressed = 1 WHERE id IN (${placeholders})`;
+
+    this.db.run(sql, ids, function(err) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, { archived: this.changes });
+      }
+    });
+  }
+
+  /**
+   * 批量解档记忆
+   * @param {Array} ids - 记忆 ID 数组
+   * @param {Function} callback
+   */
+  batchUnarchiveMemories(ids, callback) {
+    if (!ids || ids.length === 0) {
+      callback(null, { unarchived: 0 });
+      return;
+    }
+
+    const placeholders = ids.map(() => '?').join(',');
+    const sql = `UPDATE memories SET compressed = 0 WHERE id IN (${placeholders})`;
+
+    this.db.run(sql, ids, function(err) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, { unarchived: this.changes });
+      }
     });
   }
 

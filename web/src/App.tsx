@@ -10,6 +10,9 @@ import { StatCard } from './components/StatCard';
 import { SearchBar } from './components/SearchBar';
 import { MemoryCard } from './components/MemoryCard';
 import { AddMemoryDialog } from './components/AddMemoryDialog';
+import { ToastProvider } from './components/Toast';
+import Analysis from './pages/Analysis';
+import ArchivePage from './pages/Archive';
 import {
   Brain,
   Search as SearchIcon,
@@ -303,235 +306,29 @@ function SearchPage() {
   );
 }
 
-// 价值分析页面
-function AnalysisPage() {
-  const [memories, setMemories] = useState<Memory[]>([]);
-
-  useEffect(() => {
-    loadMemories();
-  }, []);
-
-  const loadMemories = async () => {
-    try {
-      const data = await getMemories();
-      setMemories(data.memories);
-    } catch (error) {
-      console.error('加载失败:', error);
-    }
-  };
-
-  const calculateValueScore = (memory: Memory) => {
-    // 计算价值评分（示例算法）
-    const frequency = Math.min(memory.stats.access_count / 10, 1);
-    const recency = Math.max(0, 1 - (Date.now() - memory.last_access * 1000) / (30 * 24 * 60 * 60 * 1000));
-    const quality = memory.tags.length > 0 ? 0.8 : 0.5;
-    const weight = memory.type === 'preference' || memory.type === 'decision' ? 1.2 : 1.0;
-
-    const overall = (frequency * 0.3 + recency * 0.3 + quality * 0.2 + weight * 0.2) * 100;
-
-    return {
-      frequency: (frequency * 100).toFixed(0),
-      recency: (recency * 100).toFixed(0),
-      quality: (quality * 100).toFixed(0),
-      overall: overall.toFixed(0),
-      recommendation: overall < 40 ? 'archive' : 'preserve'
-    };
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">价值评分分析</h1>
-        <p className="text-gray-600 mt-1">评估记忆价值和归档建议</p>
-      </div>
-
-      <div className="grid gap-4">
-        {memories.map((memory) => {
-          const score = calculateValueScore(memory);
-          const isRecommendedForArchive = score.recommendation === 'archive';
-
-          return (
-            <div key={memory.id} className="card p-6">
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="md:col-span-2">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">
-                      {memory.type}
-                    </span>
-                    {isRecommendedForArchive && (
-                      <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-orange-100 text-orange-800">
-                        建议归档
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-gray-900 mb-3">{memory.content}</p>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <span>访问 {memory.stats.access_count} 次</span>
-                    <span>最后访问 {new Date(memory.last_access * 1000).toLocaleDateString()}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-gray-600">频率</span>
-                      <span className="font-medium">{score.frequency}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full"
-                        style={{ width: `${score.frequency}%` }}
-                        role="progressbar"
-                        aria-valuenow={parseInt(score.frequency)}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-gray-600">时效性</span>
-                      <span className="font-medium">{score.recency}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-green-600 h-2 rounded-full"
-                        style={{ width: `${score.recency}%` }}
-                        role="progressbar"
-                        aria-valuenow={parseInt(score.recency)}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-gray-600">质量</span>
-                      <span className="font-medium">{score.quality}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-purple-600 h-2 rounded-full"
-                        style={{ width: `${score.quality}%` }}
-                        role="progressbar"
-                        aria-valuenow={parseInt(score.quality)}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="pt-2 border-t">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900">综合评分</span>
-                      <span className={`text-lg font-bold ${isRecommendedForArchive ? 'text-orange-600' : 'text-green-600'}`}>
-                        {score.overall}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// 归档管理页面
-function ArchivePage() {
-  const [memories, setMemories] = useState<Memory[]>([]);
-  const [filter, setFilter] = useState<'all' | 'compressed' | 'active'>('all');
-
-  useEffect(() => {
-    loadMemories();
-  }, [filter]);
-
-  const loadMemories = async () => {
-    try {
-      const data = await getMemories({
-        compressed: filter === 'all' ? undefined : filter === 'compressed'
-      });
-      setMemories(data.memories);
-    } catch (error) {
-      console.error('加载失败:', error);
-    }
-  };
-
-  const filteredMemories = memories;
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">归档管理</h1>
-        <p className="text-gray-600 mt-1">管理和查看归档的记忆</p>
-      </div>
-
-      <div className="flex gap-2">
-        <button
-          onClick={() => setFilter('all')}
-          className={`btn ${filter === 'all' ? 'btn-primary' : 'btn-outline'}`}
-        >
-          全部
-        </button>
-        <button
-          onClick={() => setFilter('compressed')}
-          className={`btn ${filter === 'compressed' ? 'btn-primary' : 'btn-outline'}`}
-        >
-          已归档
-        </button>
-        <button
-          onClick={() => setFilter('active')}
-          className={`btn ${filter === 'active' ? 'btn-primary' : 'btn-outline'}`}
-        >
-          未归档
-        </button>
-      </div>
-
-      <div className="grid gap-4">
-        {filteredMemories.length > 0 ? (
-          filteredMemories.map((memory) => (
-            <MemoryCard
-              key={memory.id}
-              memory={memory}
-              onUpdate={loadMemories}
-            />
-          ))
-        ) : (
-          <div className="card p-12 text-center text-gray-500">
-            <Archive className="h-12 w-12 mx-auto mb-4 text-gray-300" aria-hidden="true" />
-            <p>暂无记忆记录</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 // 主应用组件
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navigation />
-        <main className="container py-8">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/analysis" element={<AnalysisPage />} />
-            <Route path="/archive" element={<ArchivePage />} />
-          </Routes>
-        </main>
-        <footer className="bg-white border-t border-gray-200 py-6 mt-auto">
-          <div className="container text-center text-sm text-gray-600">
-            <p>MemClaw v1.0 - AI Memory Optimizer</p>
-          </div>
-        </footer>
-      </div>
-    </Router>
+    <ToastProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
+          <Navigation />
+          <main className="container py-8">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/analysis" element={<Analysis />} />
+              <Route path="/archive" element={<ArchivePage />} />
+            </Routes>
+          </main>
+          <footer className="bg-white border-t border-gray-200 py-6 mt-auto">
+            <div className="container text-center text-sm text-gray-600">
+              <p>MemClaw v1.0 - AI Memory Optimizer</p>
+            </div>
+          </footer>
+        </div>
+      </Router>
+    </ToastProvider>
   );
 }
 

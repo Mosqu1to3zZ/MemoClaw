@@ -2,7 +2,7 @@
  * MemClaw API 客户端
  */
 
-import { Stats, Memory, MemoriesResponse, SearchResponse, CompressResult } from '@/types/api';
+import { Stats, Memory, MemoriesResponse, SearchResponse, CompressResult, ValueScoresResponse, BatchOperationResult } from '@/types/api';
 
 const API_BASE_URL = '/api';
 
@@ -99,6 +99,33 @@ export async function archiveMemory(id: number, archived: boolean): Promise<{ me
     method: 'POST',
     body: JSON.stringify({ archived }),
   });
+}
+
+/**
+ * 批量归档记忆
+ */
+export async function batchArchiveMemories(ids: number[]): Promise<BatchOperationResult> {
+  return request<BatchOperationResult>('/memories/batch-archive', {
+    method: 'POST',
+    body: JSON.stringify({ ids }),
+  });
+}
+
+/**
+ * 批量解档记忆
+ */
+export async function batchUnarchiveMemories(ids: number[]): Promise<BatchOperationResult> {
+  return request<BatchOperationResult>('/memories/batch-unarchive', {
+    method: 'POST',
+    body: JSON.stringify({ ids }),
+  });
+}
+
+/**
+ * 获取价值评分
+ */
+export async function getValueScores(): Promise<ValueScoresResponse> {
+  return request<ValueScoresResponse>('/memories/value-scores');
 }
 
 /**
