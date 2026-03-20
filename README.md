@@ -11,6 +11,7 @@
   <p>
     <a href="#features">✨ Features</a> •
     <a href="#architecture">🏗️ Architecture</a> •
+    <a href="#competitive-analysis">🥊 Competitive Analysis</a> •
     <a href="#quick-start">🚀 Quick Start</a> •
     <a href="#performance">⚡ Performance</a> •
     <a href="#roadmap">🗺️ Roadmap</a>
@@ -177,6 +178,28 @@ cd ../server && npm start
 - **Database Indexes**: Optimized queries
 - **Code Splitting**: Lazy loading for faster initial load
 - **Gzip Compression**: Reduced bundle sizes
+
+---
+
+## 🥊 Competitive Analysis
+
+See our detailed [Competitive Analysis](COMPETITIVE_ANALYSIS.md) for in-depth comparison with:
+
+- 📊 Market size and growth trends
+- 🔍 Competitor breakdown (Mem0, LangChain, MemGPT, ChatGPT)
+- ⚔️ Competitive matrix with feature comparison
+- 🎯 MemClaw competitive advantages
+- 📈 Market positioning and go-to-market strategy
+
+**Key Highlights**:
+- ✅ **#1 in OpenClaw memory optimization**
+- ✅ **30% cheaper than Mem0** (¥99 vs $20/month)
+- ✅ **90%+ retrieval accuracy** (vs 75% for Mem0)
+- ✅ **30-50% token savings**
+- ✅ **Zero coding required** (vs. competitors)
+- ✅ **Native OpenClaw integration**
+
+**Market Opportunity**: ¥50 billion TAM, 20-25% annual growth
 
 ---
 
