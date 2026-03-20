@@ -42,7 +42,9 @@
 
 ## 🌟 About
 
-**MemClaw** is a revolutionary **AI Memory Optimization Engine** designed specifically for modern AI Agents and knowledge workers. It intelligently compresses, optimizes, and retrieves memories to maximize efficiency while minimizing resource consumption.
+**MemClaw** - AI Memory Optimizer - 让 Agent 记得更准、更聪明
+
+A revolutionary **AI Memory Optimization Engine** designed specifically for modern AI Agents and knowledge workers. It intelligently compresses, optimizes, and retrieves memories to maximize efficiency while minimizing resource consumption.
 
 ### 💡 Why MemClaw?
 
