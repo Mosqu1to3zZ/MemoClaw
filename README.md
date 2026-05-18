@@ -1,41 +1,44 @@
 <div align="center">
 
-  <img src="https://img.shields.io/badge/MemClaw-v1.0-blue?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABJQTFRF////MTAwMzMzMzMzMzMzMzMzMzMzMzMzMzMzMz///////////////////////////////////////////////////////////////////////////8nOTRvAAAAF10Uk5TAAAAAAAAAAAAAAAClZ4nOAAAAA0hSURBVHja7NVZDoMgDEbxPfP+G5cWv6ZxgFyC2sQ5k2fH3d6mO8LAAAAAElFTkSuQmCC&logo=Color" alt="MemClaw v1.0">
+  <img src="https://img.shields.io/badge/MemoClaw-v1.0-blue?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABJQTFRF////MTAwMzMzMzMzMzMzMzMzMzMzMzMzMzMzMz///////////////////////////////////////////////////////////////////////////8nOTRvAAAAF10Uk5TAAAAAAAAAAAAAAAClZ4nOAAAAA0hSURBVHja7NVZDoMgDEbxPfP+G5cWv6ZxgFyC2sQ5k2fH3d6mO8LAAAAAElFTkSuQmCC&logo=Color" alt="MemoClaw v1.0">
 
-  <h1>🧠 MemClaw - AI Memory Optimizer</h1>
+  <h1>MemoClaw - Agent Memory Infrastructure</h1>
 
   <p>
-    <strong>让 Agent 记得更准、更聪明、更省资源</strong>
+    <strong>Long-term, multimodal, evidence-backed memory for AI agents.</strong>
   </p>
 
   <p>
-    <a href="#features">✨ Features</a> •
-    <a href="#architecture">🏗️ Architecture</a> •
-    <a href="#competitive-analysis">🥊 Competitive Analysis</a> •
-    <a href="#quick-start">🚀 Quick Start</a> •
-    <a href="#performance">⚡ Performance</a> •
-    <a href="#roadmap">🗺️ Roadmap</a>
+    <strong>MemoClaw 是 AI Agent 的长期、多模态、证据型记忆层，让 AI 真正记得、会回忆、可解释、可治理。</strong>
   </p>
 
   <p>
-    <a href="https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/stargazers">
-      <img src="https://img.shields.io/github/stars/Mosqu1to3zZ/memclaw-memory-optimizer?style=social" alt="GitHub Stars" />
+    <a href="#benchmark-proof">Benchmark Proof</a> •
+    <a href="#what-makes-memoclaw-different">Why MemoClaw</a> •
+    <a href="#architecture">Architecture</a> •
+    <a href="#quick-start">Quick Start</a> •
+    <a href="./MEMOCLAW_PUBLIC_BENCHMARK_REPORT_2026-05-18.md">Benchmark Report</a> •
+    <a href="./MEMOCLAW_3_MINUTE_DEMO_SCRIPT_2026-05-18.md">Demo Script</a>
+  </p>
+
+  <p>
+    <a href="https://github.com/Mosqu1to3zZ/MemoClaw/stargazers">
+      <img src="https://img.shields.io/github/stars/Mosqu1to3zZ/MemoClaw?style=social" alt="GitHub Stars" />
     </a>
-    <a href="https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/network/members">
-      <img src="https://img.shields.io/github/forks/Mosqu1to3zZ/memclaw-memory-optimizer?style=social" alt="GitHub Forks" />
+    <a href="https://github.com/Mosqu1to3zZ/MemoClaw/network/members">
+      <img src="https://img.shields.io/github/forks/Mosqu1to3zZ/MemoClaw?style=social" alt="GitHub Forks" />
     </a>
-    <a href="https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/issues">
-      <img src="https://img.shields.io/github/issues/Mosqu1to3zZ/memclaw-memory-optimizer" alt="GitHub Issues" />
+    <a href="https://github.com/Mosqu1to3zZ/MemoClaw/issues">
+      <img src="https://img.shields.io/github/issues/Mosqu1to3zZ/MemoClaw" alt="GitHub Issues" />
     </a>
-    <a href="https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/blob/master/LICENSE">
+    <a href="https://github.com/Mosqu1to3zZ/MemoClaw/blob/main/LICENSE">
       <img src="https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square" alt="Apache-2.0" />
     </a>
   </p>
 
-  <img src="https://img.shields.io/badge/Node.js-%3E%2016.0-green?style=for-the-badge&logo=node.js" alt="Node.js">
-  <img src="https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react" alt="React">
-  <img src="https://img.shields.io/badge/Express-4.x-black?style=for-the-badge&logo=express" alt="Express">
-  <img src="https://img.shields.io/badge/SQLite3-3.x-blue?style=for-the-badge&logo=sqlite" alt="SQLite">
+  <img src="https://img.shields.io/badge/LoCoMo-98.7%25-10b981?style=for-the-badge" alt="LoCoMo 98.7%">
+  <img src="https://img.shields.io/badge/LongMemEval-95.2%25-06b6d4?style=for-the-badge" alt="LongMemEval 95.2%">
+  <img src="https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge" alt="Apache-2.0">
 
 </div>
 
@@ -43,88 +46,69 @@
 
 ## 🌟 About
 
-**MemClaw** - AI Memory Optimizer - 让 Agent 记得更准、更聪明
+**MemoClaw** is the long-term, multimodal, evidence-backed memory layer for AI agents.
 
-A revolutionary **AI Memory Optimization Engine** designed specifically for modern AI Agents and knowledge workers. It intelligently compresses, optimizes, and retrieves memories to maximize efficiency while minimizing resource consumption.
+It is built for agents that need more than a bigger context window or a vector search call. MemoClaw combines fast candidate recall, evidence-first memory reasoning, and product-grade governance so agents can remember long-running work with source visibility and control.
 
-### 💡 Why MemClaw?
+### Benchmark Proof
 
-Traditional memory management solutions face critical challenges:
+| Dataset | Main path | Judge | Total | Passed | Accuracy |
+|---|---|---:|---:|---:|---:|
+| LoCoMo Cat1-4 | SG-RNM -> Yijing Runtime | LLM | 1540 | 1520 | 98.7% |
+| LongMemEval Full | SG-RNM + answer synthesis | LLM | 500 | 476 | 95.2% |
 
-- 📈 **Unbounded Growth**: Memory files grow indefinitely, consuming massive storage and token budgets
-- 🔍 **Retrieval Inefficiency**: As memories accumulate, search accuracy and speed degrade
-- 💰 **Hidden Costs**: Excessive token usage drives up operational expenses
-- 🎯 **Value Blindness**: No way to distinguish between valuable and redundant memories
+Combined current score: `1996 / 2040 = 97.84%`.
 
-**MemClaw solves these problems** with intelligent compression algorithms and hybrid retrieval systems.
+Public proof page: `/memory-proof` in the web app.
 
 ---
 
-## ✨ Features
+## What Makes MemoClaw Different
 
-### 🧠 Intelligent Memory Compression
+MemoClaw is not a generic RAG wrapper and not only a vector database.
 
-- **30-Day Inactivity Rule**: Automatically compress memories not accessed in 30 days
-- **Frequency Decay**: Reduce priority of rarely accessed memories
-- **Value Scoring**: Multi-dimensional evaluation (frequency, recency, quality, weight)
-- **Smart Preservation**: Protect high-value memories from compression
+| Layer | Role |
+|---|---|
+| SG-RNM | Recall and candidate generation for direct agent memory |
+| Yijing Runtime | Evidence planning, verification, and answer generation |
+| ProductMemory | Governance, auditability, policy, deletion, and lifecycle control |
+| Multimodal Memory Graph | Text, screenshots, files, images, audio summaries, code, and project artifacts |
 
-### 🔍 Hybrid Retrieval Engine
+Core thesis:
 
-- **BM25 + Vector Search**: Dual-engine retrieval for 30% higher accuracy
-- **Real-time Scoring**: Relevance scoring for all search results
-- **Result Ranking**: Automatic ranking by relevance
+- Memory is not context.
+- Memory is not only retrieval.
+- Agent memory must be evidence-backed.
+- Agent memory must be governable.
+- Agent memory will become multimodal.
 
-### 📊 Value Analysis System
+### Primary Use Cases
 
-- **4-Dimensional Scoring**:
-  - 📊 Frequency (30%): Access frequency
-  - ⏰ Recency (30%): Last access time
-  - 🏷️ Quality (20%): Tag completeness
-  - ⚖️ Weight (20%): Memory type importance
-
-- **Archive Recommendations**: Smart suggestions for memory archival
-- **Batch Operations**: Efficient bulk archive/unarchive
-
-### 🎨 Modern Web UI
-
-- **Real-time Dashboard**: Live statistics and metrics
-- **Intuitive Search**: Advanced search with relevance scoring
-- **Value Analysis**: Visual breakdown of memory value
-- **Archive Management**: Easy bulk operations
+- Developer and coding agents that need durable project memory.
+- Personal AI assistants that need long-term user memory with controls.
+- Customer support and sales agents that need customer history with evidence.
+- Enterprise AI agents that need governed, auditable memory.
+- Research and analysis agents that need long-running experiment memory.
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    MemClaw System Architecture                │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│  │  Web UI      │───▶│  REST API    │───▶│  MemClaw     │      │
-│  │ - React 18   │    │ - Express.js │    │ - Compression│      │
-│  │ - TypeScript │    │ - Node.js    │    │ - Retrieval   │      │
-│  │ - Tailwind   │    │ - CORS       │    │ - Scoring     │      │
-│  └──────────────┘    └──────────────┘    └──────────────┘      │
-│         │                   │                   │              │
-│         ▼                   ▼                   ▼              │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│  │  Browser     │    │  HTTP Server │    │  SQLite DB    │      │
-│  │ - Cache      │    │ - Middleware │    │ - Indexes     │      │
-│  │ - LocalStore │    │ - Error Hdlr │    │ - Optimized   │      │
-│  └──────────────┘    └──────────────┘    └──────────────┘      │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+Agent / App
+  -> MemoClaw SDK / API
+  -> SG-RNM recall and candidate generation
+  -> Yijing Runtime evidence planning / verification / generation
+  -> ProductMemory governance
+  -> Multimodal Memory Graph
 ```
 
 ### Core Components
 
-- **MemClaw Core**: Memory compression, retrieval, and scoring algorithms
-- **REST API**: Express.js server with comprehensive API endpoints
-- **Web UI**: Modern React-based interface
-- **Database**: SQLite3 with optimized indexes
+- **SG-RNM**: Fast memory recall and candidate generation.
+- **Yijing Runtime**: Evidence-first memory reasoning for complex, temporal, identity-sensitive, and high-value questions.
+- **ProductMemory**: Product-safe memory lifecycle, governance, deletion, audit, and policy control.
+- **Web Dashboard**: Memory inspection, evidence view, API keys, benchmark visibility, and product operations.
 
 ---
 
@@ -139,8 +123,8 @@ Traditional memory management solutions face critical challenges:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer.git
-cd memclaw-memory-optimizer
+git clone https://github.com/Mosqu1to3zZ/MemoClaw.git
+cd MemoClaw
 
 # Install dependencies
 cd server && npm install
@@ -157,6 +141,85 @@ cd ../server && npm start
 
 - **Web UI**: http://localhost:3001
 - **API**: http://localhost:3001/api
+
+### Optional Shadow Mode
+
+To compare the current `hybrid` retrieval path with `SG-RNM` without changing user-facing results, start the server with shadow mode enabled:
+
+```bash
+MEMOCLAW_MEMORY_ENGINE_MODE=shadow \
+MEMOCLAW_SHADOW_LOGGING=true \
+MEMOCLAW_SHADOW_LOG_FILE=./logs/memoclaw-shadow.jsonl \
+node server/server.js
+```
+
+This keeps API responses on the primary `hybrid` path while writing shadow comparisons to a local JSONL file.
+
+Analyze the resulting shadow log:
+
+```bash
+npm run shadow:analyze -- ./logs/memoclaw-shadow.jsonl
+```
+
+Recommended checklist when reviewing the report:
+
+- Focus on `disagreeCount` and inspect the top mismatches first
+- Watch for `primaryEmptyCount > 0` because it usually signals missing lexical hits or shallow recall
+- Watch for `shadowEmptyCount > 0` because it usually signals SG-RNM hydration or recall gaps
+- Prioritize queries related to conflict, long context, preferences, and multi-value aggregation
+- Compare `avgDurationMs` before considering any future cutover
+- For aggregate queries, inspect the reported `aggregateQueries` section instead of relying on `top1` alone
+
+Run a small end-to-end replay against the API in shadow mode:
+
+```bash
+npm run shadow:replay -- \
+  http://localhost:3001 \
+  your-api-key \
+  ./logs/memoclaw-shadow.jsonl \
+  ./logs/memoclaw-shadow-report.json
+```
+
+This script seeds a small sample dataset through the API, replays a few representative queries, and emits a combined replay + shadow-analysis report.
+
+### Optional Candidate Fallback Trial
+
+To keep `hybrid` as the default path while allowing `SG-RNM` to fill only empty results for a narrow set of current-state single-value queries:
+
+```bash
+MEMOCLAW_ENABLE_SGRNM_FALLBACK=true \
+MEMOCLAW_FALLBACK_LOGGING=true \
+MEMOCLAW_FALLBACK_LOG_FILE=./logs/memoclaw-fallback.jsonl \
+node server/server.js
+```
+
+This trial does not change non-empty `hybrid` results and does not apply to aggregate queries.
+
+Analyze the resulting fallback log:
+
+```bash
+npm run fallback:analyze -- ./logs/memoclaw-fallback.jsonl
+```
+
+Recommended checklist when reviewing the fallback report:
+
+- Confirm `triggeredCount` only comes from `current_state_single_value`
+- Confirm there are no entries in `violations`
+- Inspect `reasonCounts` to ensure aggregate and open-ended queries stay blocked
+- Watch `primaryNonEmptyCount` to confirm non-empty `hybrid` paths remain untouched
+- Review `triggeredQueries` for top1 quality before widening the trial scope
+
+Run a small end-to-end replay against the API in fallback mode:
+
+```bash
+npm run fallback:replay -- \
+  http://localhost:3001 \
+  your-api-key \
+  ./logs/memoclaw-fallback.jsonl \
+  ./logs/memoclaw-fallback-report.json
+```
+
+This replay covers both allowed current-state single-value queries and explicitly blocked queries, then emits a combined replay + fallback-analysis report.
 
 ---
 
@@ -188,7 +251,7 @@ See our detailed [Competitive Analysis](COMPETITIVE_ANALYSIS.md) for in-depth co
 - 📊 Market size and growth trends
 - 🔍 Competitor breakdown (Mem0, LangChain, MemGPT, ChatGPT)
 - ⚔️ Competitive matrix with feature comparison
-- 🎯 MemClaw competitive advantages
+- 🎯 MemoClaw competitive advantages
 - 📈 Market positioning and go-to-market strategy
 
 **Key Highlights**:
@@ -328,8 +391,8 @@ This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENS
 
 ## 📧 Contact
 
-- **Issues**: [GitHub Issues](https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/Mosqu1to3zZ/memclaw-memory-optimizer/discussions)
+- **Issues**: [GitHub Issues](https://github.com/Mosqu1to3zZ/MemoClaw/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Mosqu1to3zZ/MemoClaw/discussions)
 
 ---
 
@@ -339,7 +402,7 @@ This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENS
     <strong>⭐ Star this project to show your support!</strong>
   </p>
   <p>
-    Made with ❤️ by the MemClaw Team
+    Made with ❤️ by the MemoClaw Team
   </p>
 
   <a href="#top">⬆️ Back to Top</a>
